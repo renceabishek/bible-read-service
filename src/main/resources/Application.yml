@@ -1,0 +1,6 @@
+server:
+  port:
+    1200
+firebase:
+  database-url: https://myfirstproject-fi.firebaseio.com
+  path: dailybible
