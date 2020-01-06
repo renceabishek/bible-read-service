@@ -21,6 +21,11 @@ public class DailyDataController {
   @Autowired
   private DailyDataService dailyDataService;
 
+  @GetMapping(value ="/")
+  public String get() {
+    return "Hello World";
+  }
+
   @GetMapping(value = "/all")
   public List<DailyData> getDailyData() {
     return dailyDataService.getDailyData();
