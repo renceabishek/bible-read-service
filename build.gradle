@@ -16,7 +16,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.7.RELEASE'
     id "idea"
     id "eclipse"
-    id 'checkstyle'
+    //id 'checkstyle'
 }
 
 sourceCompatibility = 1.8
