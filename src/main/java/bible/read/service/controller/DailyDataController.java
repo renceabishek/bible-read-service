@@ -1,10 +1,12 @@
 package bible.read.service.controller;
 
 import bible.read.service.model.DailyData;
+import bible.read.service.model.TotalCount;
 import bible.read.service.service.DailyDataService;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/bible")
+@CrossOrigin
 public class DailyDataController {
 
   @Autowired
@@ -44,6 +47,11 @@ public class DailyDataController {
   @PostMapping(value = "/all", consumes = "application/json")
   public void createDailyData(@RequestBody DailyData dailyData) {
      dailyDataService.createDailyData(dailyData);
+  }
+
+  @GetMapping(value="/totalCounts")
+  public List<TotalCount> getTotalCountData() {
+    return dailyDataService.getTotalCountData();
   }
 
 }

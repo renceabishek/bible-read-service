@@ -2,7 +2,10 @@ package bible.read.service.service;
 
 import bible.read.service.integration.DailyDataIntegration;
 import bible.read.service.model.DailyData;
+import bible.read.service.model.TotalCount;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +49,29 @@ public class DailyDataServiceImp implements DailyDataService {
   @Override
   public void createDailyData(DailyData dailyData) {
     dailyDataIntegration.createDailyData(dailyData);
+  }
+
+  @Override
+  public List<TotalCount> getTotalCountData() {
+    HashMap<String,Integer> hm=new HashMap<>();
+    List<TotalCount> totalCounts = new ArrayList<>();
+    dailyDataIntegration.getDailyData().entrySet()
+        .forEach(k -> {
+          DailyData dailyData = objectMapper.convertValue(k.getValue(), DailyData.class);
+          if(!hm.containsKey(dailyData.getName())) {
+            hm.put(dailyData.getName(), 1);
+          } else {
+            hm.compute(dailyData.getName(), (key,value)->value+1);
+          }
+        });
+
+    hm.entrySet().stream()
+        .forEach(k->{
+          TotalCount totalCount=new TotalCount();
+          totalCount.setName(k.getKey());
+          totalCount.setCount(k.getValue());
+          totalCounts.add(totalCount);
+        });
+    return totalCounts;
   }
 }
